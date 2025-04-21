@@ -32,10 +32,11 @@ func main() {
 	var numOne int8 = 25
 	var numTwo int8 = -128
 	var numThree uint8 = 25
-	var scoreOne float32
 
 	var scoreOne float32 = 25.98
 	var scoreTwo float64 = 85436523462354654265246.7
 	scoreThree := 1.5
+
+	fmt.Println(numOne, numTwo, numThree, scoreOne, scoreTwo, scoreThree)
 
 }
