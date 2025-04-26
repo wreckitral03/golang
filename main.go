@@ -38,5 +38,4 @@ func main() {
 	scoreThree := 1.5
 
 	fmt.Println(numOne, numTwo, numThree, scoreOne, scoreTwo, scoreThree)
-
 }
