@@ -2,13 +2,12 @@ import { useState } from 'react';
 import {
   Paper,
   TextInput,
-  NumberInput,
   Select,
   Button,
   Group,
 } from '@mantine/core';
+import { NumericFormat } from 'react-number-format'; // ✅ correct import
 import { createTransaction } from '../api';
-import { formatRupiah } from '../utils/formatCurrency'; // ✅ centralized formatter
 
 interface TransactionFormProps {
   onSuccess: () => void;
@@ -51,20 +50,17 @@ export default function TransactionForm({ onSuccess }: TransactionFormProps) {
             ]}
           />
 
-          <NumberInput
+          <NumericFormat
             required
             label="Amount"
             value={amount}
-            onChange={setAmount}
-            min={0}
-            precision={0}
-            step={1000}
-            parser={(value) => value?.replace(/[^\d]/g, '') || ''}
-            formatter={(value) =>
-              !Number.isNaN(parseFloat(value || ''))
-                ? formatRupiah(parseFloat(value))
-                : 'Rp0'
-            }
+            onValueChange={(values) => {
+              setAmount(values.floatValue ?? '');
+            }}
+            thousandSeparator="."
+            decimalSeparator=","
+            prefix="Rp "
+            customInput={TextInput}
           />
 
           <TextInput

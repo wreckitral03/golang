@@ -29,15 +29,19 @@ services:
       - DB_USER=postgres
       - DB_PASSWORD=postgres
       - DB_NAME=finance_app_db
+      - JWT_SECRET=supersecretkey
+      - CORS_ORIGIN=http://localhost:5173
 
   frontend:
     build: ./finance-app-ui
     ports:
-      - "5173:5173"  # ✅ Fix: expose Vite dev port
+      - "5173:5173"
     depends_on:
       - app
     environment:
       - VITE_API_BASE=http://localhost:8080
+    volumes:
+    - ./finance-app-ui:/app
 
 volumes:
   db-data:

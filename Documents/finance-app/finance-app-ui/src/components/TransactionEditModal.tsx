@@ -9,6 +9,7 @@ import {
 import { useState } from 'react';
 import { Transaction } from '../types';
 import { updateTransaction } from '../api';
+import { formatRupiah } from '../utils/formatCurrency';
 
 interface TransactionEditModalProps {
   transaction: Transaction;
@@ -22,7 +23,7 @@ export default function TransactionEditModal({
   onSuccess,
 }: TransactionEditModalProps) {
   const [type, setType] = useState(transaction.type);
-  const [amount, setAmount] = useState(transaction.amount);
+  const [amount, setAmount] = useState<number>(transaction.amount);
   const [note, setNote] = useState(transaction.note);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -54,14 +55,14 @@ export default function TransactionEditModal({
           required
           label="Amount"
           value={amount}
-          onChange={(value) => setAmount(value as number)}
+          onChange={(value) => setAmount(typeof value === 'number' ? value : 0)}
           min={0}
           precision={0}
           step={1000}
           parser={(value) => value?.replace(/[^\d]/g, '') || ''}
           formatter={(value) =>
             !Number.isNaN(parseFloat(value || ''))
-              ? `Rp${parseFloat(value).toLocaleString('id-ID')}`
+              ? formatRupiah(parseFloat(value))
               : 'Rp0'
           }
           mb="md"
